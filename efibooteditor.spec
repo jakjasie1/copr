@@ -8,8 +8,8 @@ URL:            https://github.com/Neverous/efibooteditor
 Source0:        https://github.com/Neverous/efibooteditor/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  cmake
-BuildRequires:  cmake(Qt5Core)
-BuildRequires:	cmake(Qt5Tools)
+BuildRequires: cmake(Qt6Quick)
+BuildRequires:	cmake(Qt6Tools)
 BuildRequires:  pkgconfig(efivar)
 
 Requires:       efivar
