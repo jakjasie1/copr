@@ -5,23 +5,21 @@ Summary:        System restore tool for Linux
 Group:          Archiving/Backup
 License:        GPLv3+
 URL:            https://github.com/linuxmint/timeshift
-Source0:        https://github.com/linuxmint/timeshift/archive/refs/tags/v%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/linuxmint/timeshift/archive/refs/tags/25.07.5.tar.gz
 
-BuildRequires:  meson
-BuildRequires:  desktop-file-utils
-BuildRequires:  gettext
+BuildRequires:  chrpath
+BuildRequires:  fdupes
 BuildRequires:  help2man
-BuildRequires:  pkgconfig(json-glib-1.0)
-BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(gio-unix-2.0)
-BuildRequires:  pkgconfig(gtk+-3.0)
+BuildRequires:  meson
+BuildRequires:  pkgconfig
+BuildRequires:  vala
 BuildRequires:  pkgconfig(gee-0.8)
+BuildRequires:  pkgconfig(gtk+-3.0)
+BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(vte-2.91)
 BuildRequires:  pkgconfig(xapp)
-BuildRequires:  vala
 
 Requires:       cronie
-Requires:       hicolor-icon-theme
 Requires:       polkit
 Requires:       psmisc
 Requires:       rsync
@@ -42,8 +40,12 @@ filesystem. BTRFS snapshots are supported only on BTRFS systems having an
 Ubuntu-type subvolume layout (with @ and @home subvolumes).
 
 
+%lang_package
+
 %prep
 %autosetup -p1
+# rpmlint
+sed -i -e 's|/usr/bin/env bash|/usr/bin/bash|g' src/timeshift-launcher
 
 %build
 %meson -Dxapp=false
@@ -51,38 +53,43 @@ Ubuntu-type subvolume layout (with @ and @home subvolumes).
 
 %install
 %meson_install
-# Remove duplicate
+#Cleanup rpath references
+chrpath --delete %{buildroot}%{_bindir}/timeshift
+chrpath --delete %{buildroot}%{_bindir}/timeshift-gtk
+#Fix file permissions
+chmod 0644 %{buildroot}%{_sysconfdir}/timeshift/default.json
+chmod 0644 %{buildroot}%{_datadir}/metainfo/timeshift.appdata.xml
+chmod 0644 %{buildroot}%{_datadir}/timeshift/images/*.svg
+#Remove as we use rpm/dnf
+rm -f %{buildroot}%{_bindir}/timeshift-uninstall
+#Remove appdata in preference to metadinfo
 rm -rf %{buildroot}%{_datadir}/appdata
+#Manually add log directories, set mode to 0750 and owned by root (boo#1165805)
+install -d %{buildroot}%{_localstatedir}/log/timeshift
+install -d %{buildroot}%{_localstatedir}/log/timeshift-btrfs
+#%%suse_update_desktop_file -r timeshift-gtk Utility Archiving
+%find_lang %{name} %{?no_lang_C}
 
-%find_lang %{name}
+%fdupes %{buildroot}%{_datadir}
 
-%post
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+%files
+%license LICENSES/*
+%dir %{_sysconfdir}/timeshift
+%config(noreplace) %{_sysconfdir}/timeshift/default.json
+%{_bindir}/timeshift*
+%{_datadir}/applications/timeshift-gtk.desktop
+%{_datadir}/icons/hicolor/*/apps/*
+%{_mandir}/man1/timeshift.1%{?ext_man}
+%{_mandir}/man1/timeshift-gtk.1%{?ext_man}
+%{_datadir}/metainfo/timeshift.appdata.xml
+%{_datadir}/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
+%{_datadir}/pixmaps/timeshift.png
+%{_datadir}/timeshift/
+%attr(0750,root,root) %dir %{_localstatedir}/log/timeshift
+%attr(0750,root,root) %dir %{_localstatedir}/log/timeshift-btrfs
 
-%postun
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
+%files lang -f %{name}.lang
 
-%posttrans
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
-%files -f %{name}.lang
-%doc AUTHORS README.md
-%{_bindir}/*
-%{_datadir}/metainfo/*.appdata.xml
-%{_datadir}/applications/*
-%{_datadir}/icons/hicolor/*/apps/%{name}.png
-%{_datadir}/pixmaps/%{name}.png
-%{_datadir}/polkit-1/actions/*.policy
-%{_datadir}/%{name}
-%{_mandir}/man1/%{name}.1*
-%{_mandir}/man1/timeshift-gtk.1.*
-%ghost %attr(644, root, root) %{_sysconfdir}/cron.d/timeshift-boot
-%ghost %attr(644, root, root) %{_sysconfdir}/cron.d/timeshift-hourly
-%ghost %attr(664, root, root) %{_sysconfdir}/timeshift.json
-%config %{_sysconfdir}/timeshift/default.json
 
 
 %changelog
