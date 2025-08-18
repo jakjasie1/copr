@@ -1,5 +1,5 @@
 Name:           timeshift
-Version:        24.06.6
+Version:        25.07.5
 Release:        1%{?dist}
 Summary:        System restore tool for Linux
 Group:          Archiving/Backup
@@ -17,9 +17,9 @@ BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(gee-0.8)
 BuildRequires:  pkgconfig(vte-2.91)
-# Sit in unsupported repo, disable it for now.
 BuildRequires:  pkgconfig(xapp)
 BuildRequires:  vala
+
 Requires:       cronie
 Requires:       hicolor-icon-theme
 Requires:       polkit
@@ -86,6 +86,9 @@ fi
 
 
 %changelog
+* Mon Aug 18 2025 krzysiu
+- Update to 25.07.5
+
 * Tue Jun 3 2025 krzysiu
 - First release
 - Version 24.06.6
