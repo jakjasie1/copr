@@ -2,13 +2,10 @@ Name:           timeshift
 Version:        25.07.5
 Release:        1%{?dist}
 Summary:        System restore tool for Linux
-Group:          Archiving/Backup
-License:        GPLv3+
+License:        GPL-2.0-or-later
 URL:            https://github.com/linuxmint/timeshift
 Source0:        https://github.com/linuxmint/timeshift/archive/refs/tags/25.07.5.tar.gz
 
-BuildRequires:  chrpath
-BuildRequires:  fdupes
 BuildRequires:  help2man
 BuildRequires:  meson
 BuildRequires:  pkgconfig
@@ -39,9 +36,6 @@ In BTRFS mode, snapshots are taken using the in-built features of the BTRFS
 filesystem. BTRFS snapshots are supported only on BTRFS systems having an
 Ubuntu-type subvolume layout (with @ and @home subvolumes).
 
-
-%lang_package
-
 %prep
 %autosetup -p1
 # rpmlint
@@ -53,43 +47,44 @@ sed -i -e 's|/usr/bin/env bash|/usr/bin/bash|g' src/timeshift-launcher
 
 %install
 %meson_install
-#Cleanup rpath references
-chrpath --delete %{buildroot}%{_bindir}/timeshift
-chrpath --delete %{buildroot}%{_bindir}/timeshift-gtk
+
+# Remove duplicate
+rm -rf %{buildroot}%{_datadir}/appdata
+
+%find_lang %{name}
+
+
 #Fix file permissions
 chmod 0644 %{buildroot}%{_sysconfdir}/timeshift/default.json
-chmod 0644 %{buildroot}%{_datadir}/metainfo/timeshift.appdata.xml
 chmod 0644 %{buildroot}%{_datadir}/timeshift/images/*.svg
 #Remove as we use rpm/dnf
 rm -f %{buildroot}%{_bindir}/timeshift-uninstall
-#Remove appdata in preference to metadinfo
-rm -rf %{buildroot}%{_datadir}/appdata
-#Manually add log directories, set mode to 0750 and owned by root (boo#1165805)
+
+#Manually add log directories, set mode to 0750 and owned by root
 install -d %{buildroot}%{_localstatedir}/log/timeshift
 install -d %{buildroot}%{_localstatedir}/log/timeshift-btrfs
-#%%suse_update_desktop_file -r timeshift-gtk Utility Archiving
-%find_lang %{name} %{?no_lang_C}
 
-%fdupes %{buildroot}%{_datadir}
 
-%files
+%files -f %{name}.lang
 %license LICENSES/*
-%dir %{_sysconfdir}/timeshift
-%config(noreplace) %{_sysconfdir}/timeshift/default.json
-%{_bindir}/timeshift*
-%{_datadir}/applications/timeshift-gtk.desktop
-%{_datadir}/icons/hicolor/*/apps/*
-%{_mandir}/man1/timeshift.1%{?ext_man}
-%{_mandir}/man1/timeshift-gtk.1%{?ext_man}
-%{_datadir}/metainfo/timeshift.appdata.xml
-%{_datadir}/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
-%{_datadir}/pixmaps/timeshift.png
-%{_datadir}/timeshift/
+%doc AUTHORS README.md
+%{_bindir}/*
+%{_metainfodir}/*.metainfo.xml
+%{_datadir}/applications/*.desktop
+%{_datadir}/pixmaps/%{name}.png
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_datadir}/polkit-1/actions/*.policy
+%{_datadir}/%{name}/
+%{_mandir}/man1/%{name}.1*
+%{_mandir}/man1/%{name}-gtk.1.*
+%dir %{_sysconfdir}/%{name}
+%config %{_sysconfdir}/%{name}/default.json
+%ghost %attr(644, root, root) %{_sysconfdir}/cron.d/%{name}-boot
+%ghost %attr(644, root, root) %{_sysconfdir}/cron.d/%{name}-hourly
+%ghost %attr(664, root, root) %{_sysconfdir}/%{name}.json
+
 %attr(0750,root,root) %dir %{_localstatedir}/log/timeshift
 %attr(0750,root,root) %dir %{_localstatedir}/log/timeshift-btrfs
-
-%files lang -f %{name}.lang
-
 
 
 %changelog
