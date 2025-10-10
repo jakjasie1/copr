@@ -9,6 +9,7 @@ URL:         https://github.com/sandsmark/selectdefaultapplication
 Source0:     https://github.com/sandsmark/selectdefaultapplication/archive/refs/heads/master.tar.gz
 
 BuildRequires:  qt5-qtbase-devel
+BuildRequires: qmake
 Requires:       qt5-qtbase
 
 %description
