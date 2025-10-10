@@ -2,7 +2,7 @@
 
 Name:           selectdefaultapplication
 Version:        20210812
-Release:        1-100
+Release:        2%{dist}
 Summary:     an ugly hack to be able to select default applications in linux in a better way
 License:        GPL-2.0-only
 URL:         https://github.com/sandsmark/selectdefaultapplication
