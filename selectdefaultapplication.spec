@@ -10,8 +10,6 @@ Source0:     https://github.com/sandsmark/selectdefaultapplication/archive/refs/
 
 BuildRequires:  qt5-qtbase-devel
 BuildRequires: make
-BuildRequires: qmake
-BuildRequires: qmake-qt5
 Requires:       qt5-qtbase
 
 %description
