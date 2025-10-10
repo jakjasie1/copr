@@ -21,7 +21,7 @@ Requires:       qt5-qtbase
 %autosetup -n selectdefaultapplication-master
 
 %build
-qmake
+qmake-qt5
 %make_build
 
 %install
