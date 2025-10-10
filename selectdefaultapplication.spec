@@ -9,7 +9,7 @@ URL:         https://github.com/sandsmark/selectdefaultapplication
 Source0:     https://github.com/sandsmark/selectdefaultapplication/archive/refs/heads/master.tar.gz
 
 BuildRequires:  qt5-qtbase-devel
-BuildRequires: make
+BuildRequires: qmake
 Requires:       qt5-qtbase
 
 %description
@@ -19,7 +19,7 @@ Requires:       qt5-qtbase
 %autosetup -n selectdefaultapplication-master
 
 %build
-qmake-qt5
+qmake
 %make_build
 
 %install
@@ -31,16 +31,16 @@ install -Dm0755 selectdefaultapplication \
 
 # Install the desktop file
 install -Dm0644 selectdefaultapplication.desktop \
-    %{buildroot}%{_datadir}/selectdefaultapplication.desktop
+    %{buildroot}%{_datadir}/applications/selectdefaultapplication.desktop
 
 install -Dm0644 selectdefaultapplication.png \
-   %{buildroot}%{_iconsdir}/selectdefaultapplication.png
+   %{buildroot}%{_iconsdir}/hicolor/48x48/apps/selectdefaultapplication.png
 
 %files
 %license COPYING
 %{_bindir}/selectdefaultapplication
-%{_datadir}/selectdefaultapplication.desktop
-%{_iconsdir}/selectdefaultapplication.png
+%{_datadir}/applications/selectdefaultapplication.desktop
+%{_iconsdir}/hicolor/48x48/apps/selectdefaultapplication.png
 
 %changelog
 * Sun Oct 10 2025  jakjasie1  - 20210812-1
