@@ -44,15 +44,13 @@ cp -r usr etc %{buildroot}/
 
 /etc/btrfs-desktop-notification.conf
 /etc/xdg/autostart/btrfs-desktop-notification.desktop
-/etc/xdg/autostart/detect-ro-system.desktop
 
 /usr/bin/btrfs-desktop-notification
-/usr/bin/detect-ro-system
 /usr/share/applications/btrfs-desktop-notification.desktop
 /usr/share/doc/btrfs-desktop-notification/screenshots/{1,2}.jpg
 
 %changelog
-* Mon Mar 2 2026 
+* Mon Mar 2 2026 jakjasie1
 - Update to  1.6.1
 
 * Wed Sep 24 2025 jakjasie1
