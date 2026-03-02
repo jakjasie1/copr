@@ -36,6 +36,10 @@ Requires:       qt6-qtsvg
 %{_datadir}/applications/EFIBootEditor.desktop
 %{_datadir}/polkit-1/actions/org.x.%{name}.policy
 %{_metainfodir}/EFIBootEditor.metainfo.xml
+%{_bindir}/AppRun
+%{_bindir}/run-efibooteditor
+%{_datadir}icons/EFIBootEditor.svg
+
 
 %changelog
 * Mon Mar 02 2026 jakjasie1 - 1.5.6-1
