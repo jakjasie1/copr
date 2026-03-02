@@ -1,5 +1,5 @@
 Name:           timeshift
-Version:        25.07.7
+Version:       25.12.4
 Release:        1%{?dist}
 Summary:        System restore tool for Linux
 License:        GPL-2.0-or-later
