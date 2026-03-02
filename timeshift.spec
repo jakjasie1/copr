@@ -88,7 +88,7 @@ install -d %{buildroot}%{_localstatedir}/log/timeshift-btrfs
 
 
 %changelog
-* Mon Mar 2 2026 jakjasie1
+* Mon Mar 02 2026 jakjasie1 - 25.12.4-1
 - Update to 25.12.4
 
 * Sat Sep 13 2025 jakjasie1
