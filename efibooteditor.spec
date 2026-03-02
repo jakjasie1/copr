@@ -1,5 +1,5 @@
 Name:           efibooteditor
-Version:        1.5.3
+Version:        1.5.6
 Release:        1%{?dist}
 Summary:        Boot Editor for (U)EFI based systems
 
@@ -41,6 +41,9 @@ Requires:       efivar
 
 
 %changelog
+* Mon Mar 2 2026 - 1.5.6
+- Update to 1.5.6
+
 * Sat Aug 16 2025 - 1.5.3
 - Published to COPR
 - Update version
