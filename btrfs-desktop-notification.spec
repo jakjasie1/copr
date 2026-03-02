@@ -3,7 +3,7 @@
 
 
 Name:           btrfs-desktop-notification
-Version:        1.3.1
+Version:        1.6.1
 Release:        1%{?dist}
 Summary:   Tool to send notifications when booting into read-only system or when BTRFS warnings/errors appear in kernel log.
 License:        GPL-3.0
@@ -50,7 +50,11 @@ cp -r usr etc %{buildroot}/
 /usr/bin/detect-ro-system
 /usr/share/applications/btrfs-desktop-notification.desktop
 /usr/share/doc/btrfs-desktop-notification/screenshots/{1,2}.jpg
+
 %changelog
+* Mon Mar 2 2026 
+- Update to  1.6.1
+
 * Wed Sep 24 2025 jakjasie1
 - First release; version 1.3.1
 - From the official AUR package
