@@ -41,14 +41,16 @@ Requires:       efivar
 
 
 %changelog
-* Mon Mar 2 2026 - 1.5.6
+* Mon Mar 02 2026 jakjasie1 - 1.5.6-1
 - Update to 1.5.6
 
-* Sat Aug 16 2025 - 1.5.3
+* Sat Aug 16 2025 jakjasie1 - 1.5.3-1
 - Published to COPR
 - Update version
 
 * Tue Mar 28 2023 - 1.2.0-beta.2-1
 - Updated version
+
 * Sun Jan 22 2023 Justin Zobel <justin@1707.io> - 1.1.5-1
 - Initial Version
+
