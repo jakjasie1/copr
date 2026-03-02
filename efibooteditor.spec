@@ -8,11 +8,12 @@ URL:            https://github.com/Neverous/efibooteditor
 Source0:        https://github.com/Neverous/efibooteditor/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires:  cmake
-BuildRequires: cmake(Qt6Quick)
 BuildRequires:	cmake(Qt6Tools)
-BuildRequires:  pkgconfig(efivar)
 
 Requires:       efivar
+Requires:       zlib
+Requires:       qt6-qtbase
+Requires:       qt6-qtsvg
 
 %description
 %{summary}.
@@ -20,25 +21,19 @@ Requires:       efivar
 %prep
 %autosetup -n %{name}-%{version}
 
-
 %build
 %cmake
-%cmake_build
-
+%cmake_build --config Release
 
 %install
 %cmake_install
 
-
 %files
-%doc doc/*
 %license LICENSE.txt
 %{_bindir}/%{name}
 %{_datadir}/applications/EFIBootEditor.desktop
 %{_datadir}/polkit-1/actions/org.x.%{name}.policy
 %{_metainfodir}/EFIBootEditor.metainfo.xml
-
-
 
 %changelog
 * Mon Mar 02 2026 jakjasie1 - 1.5.6-1
