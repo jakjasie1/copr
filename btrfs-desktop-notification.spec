@@ -50,9 +50,9 @@ cp -r usr etc %{buildroot}/
 /usr/share/doc/btrfs-desktop-notification/screenshots/{1,2}.jpg
 
 %changelog
-* Mon Mar 2 2026 jakjasie1
+* Mon Mar 02 2026 jakjasie1 - 1.6.1-1
 - Update to  1.6.1
 
-* Wed Sep 24 2025 jakjasie1
+* Wed Sep 24 2025 jakjasie1 - 1.3.1-1
 - First release; version 1.3.1
 - From the official AUR package
