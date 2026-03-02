@@ -10,6 +10,7 @@ Source0:        https://github.com/Neverous/efibooteditor/archive/refs/tags/v%{v
 BuildRequires:  cmake
 BuildRequires:	cmake(Qt6Tools)
 BuildRequires:	cmake(Qt6Svg)
+BuildRequires:  pkgconfig(efivar)
 
 Requires:       efivar
 Requires:       zlib
